@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: portfolio_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: portfolio_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongodb:27017/portfolio
+      - JWT_SECRET=supersecretportfoliojwtkey2026
+      - NODE_ENV=development
+    depends_on:
+      - mongodb
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: portfolio_frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: portfolio_admin
+    ports:
+      - "5174:5173" # Mapping Vite's default 5173 to 5174 on host
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+
+volumes:
+  mongo_data:
