@@ -8,8 +8,6 @@ const connectDB = require('./src/config/db');
 // Load env vars
 dotenv.config();
 
-// Connect to database
-connectDB();
 
 const app = express();
 
@@ -28,16 +26,52 @@ app.use('/api/skills', require('./src/routes/skillRoutes'));
 app.use('/api/experience', require('./src/routes/experienceRoutes'));
 app.use('/api/education', require('./src/routes/educationRoutes'));
 app.use('/api/messages', require('./src/routes/messageRoutes'));
+// Root health check
+app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+const User = require('./src/models/User');
+const bcrypt = require('bcryptjs');
+
+// Create a default admin user on startup if it doesn't exist.
+const createAdminUser = async () => {
+  try {
+    const adminEmail = process.env.ADMIN_EMAIL || 'jishajayaprakash336@gmail.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'jisha2005@';
+
+    const existing = await User.findOne({ email: adminEmail });
+    if (!existing) {
+      const salt = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(adminPassword, salt);
+      await User.create({ name: 'Admin', email: adminEmail, password: hashed });
+      console.log(`Default admin user created: ${adminEmail}`);
+    } else {
+      console.log(`Admin user already exists: ${adminEmail}`);
+    }
+  } catch (err) {
+    console.error('Admin creation error:', err);
+  }
+};
 
 // Error handling middleware
 const { notFound, errorHandler } = require('./src/middlewares/errorMiddleware');
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const startServer = async () => {
+  try {
+    await connectDB();
+    await createAdminUser();
 
-app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  }
+};
+
+startServer();

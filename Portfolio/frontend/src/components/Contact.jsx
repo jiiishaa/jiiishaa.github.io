@@ -19,11 +19,30 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('Sending...');
+    
     try {
-      await api.post('/messages', formData);
-      setStatus('Message sent successfully!');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setStatus(''), 3000);
+      const response = await fetch("https://formsubmit.co/ajax/jishajayaprakash336@gmail.com", {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            Name: formData.name,
+            Email: formData.email,
+            Subject: formData.subject,
+            Message: formData.message
+        })
+      });
+
+      if (response.ok) {
+        setStatus('Message sent successfully!');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setStatus(''), 3000);
+      } else {
+        setStatus('Failed to send message. Please try again.');
+        setTimeout(() => setStatus(''), 3000);
+      }
     } catch (error) {
       console.error(error);
       setStatus('Failed to send message. Please try again.');
