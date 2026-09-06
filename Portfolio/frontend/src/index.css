@@ -36,18 +36,18 @@
   }
   
   .glass-card {
-    @apply bg-navy-light/40 backdrop-blur-md border border-cyan/20 rounded-2xl hover:border-cyan/60 hover:shadow-[0_0_20px_rgba(0,229,255,0.3)] transition-all duration-300;
+    @apply bg-navy-light/40 backdrop-blur-md border border-cyan/20 rounded-2xl hover:border-cyan/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300;
   }
 
   .text-glow {
-    text-shadow: 0 0 10px rgba(0, 229, 255, 0.7), 0 0 20px rgba(0, 229, 255, 0.5);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5);
   }
 
   .btn-primary {
-    @apply relative px-8 py-3 bg-cyan text-navy font-bold rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,229,255,0.6)] hover:scale-105 z-10;
+    @apply relative px-8 py-3 bg-cyan text-navy font-bold rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:scale-105 z-10;
   }
 
   .btn-outline {
-    @apply px-8 py-3 bg-transparent border-2 border-cyan text-cyan font-bold rounded-full transition-all duration-300 hover:bg-cyan/10 hover:shadow-[0_0_15px_rgba(0,229,255,0.4)];
+    @apply px-8 py-3 bg-transparent border-2 border-cyan text-cyan font-bold rounded-full transition-all duration-300 hover:bg-cyan/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)];
   }
 }
