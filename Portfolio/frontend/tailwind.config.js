@@ -7,9 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: '#07111F',
-        cyan: '#00E5FF',
-        'navy-light': '#0B1B32',
+        navy: '#160B24',
+        cyan: '#FFA07A',
+        'navy-light': '#24153B',
       },
       fontFamily: {
         sans: ['Outfit', 'sans-serif'],
