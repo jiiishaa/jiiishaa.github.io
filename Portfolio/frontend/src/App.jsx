@@ -3,7 +3,7 @@ import Loader from './components/Loader';
 import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Stats from './components/Stats';
+
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Education from './components/Education';
@@ -31,7 +31,7 @@ function App() {
         <div className="bg-navy min-h-screen text-white selection:bg-cyan selection:text-navy">
           <Navbar />
           <Hero />
-          <Stats />
+
           <Skills />
           <Experience />
           <Education />
